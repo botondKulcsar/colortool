@@ -33,6 +33,7 @@ const hexInput = document.getElementById('hexInput'); // the input field
 const inputColor = document.getElementById('inputColor');
 const slider = document.getElementById('slider');
 const sliderText = document.getElementById('sliderText');
+const alteredColorText = document.getElementById('alteredColorText');
 
 
 hexInput.addEventListener("keyup", handleKeyUp);
@@ -174,8 +175,38 @@ const converRGBToHex = (r, g, b) => {
 
 
 slider.addEventListener('input', () => {
+    //check if hex is valid
+    if (!isValidHex(hexInput.value)) {
+        return;
+    }
     sliderText.textContent = `${slider.value}%`;
+    let percentage = slider.value;
+
+    let hexNoHash = formatHex(hexInput.value).slice(1); // make sure there is a starting # then remove it with slice(1)
+
+    //get the altered hex value
+    const alteredHex = alterColor(hexNoHash, percentage);
+
+    //update the altered color
+    let alteredColorDiv = document.getElementById('alteredColor');
+    changeBackground(alteredColorDiv, alteredHex);
+    alteredColorText.textContent = `Altered Color: ${hashedAlteredColor}`;
 })
+
+// down below MENTOR's solution:
+
+slider.addEventListener('input', () => {
+    if (!isValidHex(hexInput.value)) return;
+
+
+    sliderText.textContent = `${slider.value}%`;
+
+
+    //get the altered hex value
+    const alteredHex = alterColor(hexInput.value, slider.value);
+    //update the altered color
+})
+
 
 
 //Create the alterColor function which accepts hex value and percentage
