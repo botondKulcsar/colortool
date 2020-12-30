@@ -31,6 +31,8 @@ const isValidHex = (hex) => {
 
 const hexInput = document.getElementById('hexInput'); // the input field
 const inputColor = document.getElementById('inputColor');
+const slider = document.getElementById('slider');
+const sliderText = document.getElementById('sliderText');
 
 
 hexInput.addEventListener("keyup", handleKeyUp);
@@ -158,9 +160,26 @@ const convertHexToRGB = (hex) => {
 //mentors trick add a 0 string than slice - give me the last two characters :))
 const converRGBToHex = (r, g, b) => {
     const firstPair = ("0" + r.toString(16)).slice(-2);
-    const firstPair = ("0" + r.toString(16)).slice(-2);
-    const firstPair = ("0" + r.toString(16)).slice(-2);
+    const secondPair = ("0" + r.toString(16)).slice(-2);
+    const thirdPair = ("0" + r.toString(16)).slice(-2);
 
     const hex = "#" + firstPair + secondPair + thirdPair;
     return hex;
 }
+
+//get a reference to the slider and sliderText DOM elements
+//create an input event listener for slider element
+//display the value of the slider 
+
+
+
+slider.addEventListener('input', () => {
+    sliderText.textContent = `${slider.value}%`;
+})
+
+
+//Create the alterColor function which accepts hex value and percentage
+//convert the hex value to rgb
+//increase each r,g,b value by appropriate amount (percentage of 255)
+//use the new r,g,b values to convert to a hex value
+//return the hex value
