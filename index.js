@@ -160,8 +160,8 @@ const convertHexToRGB = (hex) => {
 //mentors trick add a 0 string than slice - give me the last two characters :))
 const converRGBToHex = (r, g, b) => {
     const firstPair = ("0" + r.toString(16)).slice(-2);
-    const secondPair = ("0" + r.toString(16)).slice(-2);
-    const thirdPair = ("0" + r.toString(16)).slice(-2);
+    const secondPair = ("0" + g.toString(16)).slice(-2);
+    const thirdPair = ("0" + b.toString(16)).slice(-2);
 
     const hex = "#" + firstPair + secondPair + thirdPair;
     return hex;
@@ -183,3 +183,45 @@ slider.addEventListener('input', () => {
 //increase each r,g,b value by appropriate amount (percentage of 255)
 //use the new r,g,b values to convert to a hex value
 //return the hex value
+
+// my OWN solution: 
+
+// function increaseByPercentage(num, percentage) {
+//     return Math.round(num + (percentage / 100) * 255);
+// }
+
+// function alterColor(hex, percentage) {
+//     const rgbObj = convertHexToRGB(hex);
+//     let { r, g, b } = rgbObj;
+//     console.log('r: ', r, 'g: ', g, 'b: ', b);
+//     r = increaseByPercentage(r, percentage);
+//     r = r > 255 ? 255 : r;
+//     g = increaseByPercentage(g, percentage);
+//     g = g > 255 ? 255 : g;
+//     b = increaseByPercentage(b, percentage);
+//     b = b > 255 ? 255 : b;
+//     console.log('r: ', r, 'g: ', g, 'b: ', b);
+//     let hexColor = converRGBToHex(r, g, b);
+//     return hexColor;
+// }
+
+// mentor's solution:
+
+const alterColor = (hex, percentage) => {
+    const { r, g, b } = convertHexToRGB(hex);
+
+    const amount = Math.floor((percentage / 100) * 255);
+
+    const newR = increaseWithin0To255(r, amount);
+    const newG = increaseWithin0To255(g, amount);
+    const newB = increaseWithin0To255(b, amount);
+    return converRGBToHex(newR, newG, newB);
+}
+
+function increaseWithin0To255(value, amount) {
+    // const newValue = value + amount;
+    // if (newValue > 255) return 255;
+    // if (newValue < 0) return 0;
+    // return newValue;
+    return Math.min(255, Math.max(0, value + amount));
+}
