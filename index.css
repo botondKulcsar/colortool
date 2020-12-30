@@ -41,3 +41,39 @@ input[type="text"] {
     background-color: #c6d5ac;
     margin-bottom: 25px;
 }
+
+.toggle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.toggle-text {
+    font-size: 18px;
+}
+
+.toggle-btn {
+    height: 30px;
+    width: 60px;
+    background: grey;
+    margin: 0 0.7em;
+    border-radius: 30px;
+    padding: 5px;
+}
+
+.inner-circle {
+    background: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    transition: all 250ms;
+}
+
+.toggle-btn.toggled>.inner-circle {
+    transform: translateX(30px);
+    background-color: #333;
+}
+
+.unselected {
+    opacity: 0.25;
+}
