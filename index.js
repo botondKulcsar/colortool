@@ -34,6 +34,14 @@ const inputColor = document.getElementById('inputColor');
 const slider = document.getElementById('slider');
 const sliderText = document.getElementById('sliderText');
 const alteredColorText = document.getElementById('alteredColorText');
+//lightenText, darkenText, toggleBtn
+
+//click event listener to the toggle btn
+//
+const lightenText = document.getElementById('lightenText');
+const darkenText = document.getElementById('darkenText');
+const toggleBtn = document.getElementById('toggleBtn');
+
 
 
 hexInput.addEventListener("keyup", handleKeyUp);
@@ -256,3 +264,9 @@ function increaseWithin0To255(value, amount) {
     // return newValue;
     return Math.min(255, Math.max(0, value + amount));
 }
+
+toggleBtn.addEventListener('click', () => {
+    toggleBtn.classList.toggle('toggled');
+    lightenText.classList.toggle('unselected');
+    darkenText.classList.toggle('unselected');
+})

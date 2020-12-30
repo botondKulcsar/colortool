@@ -75,5 +75,6 @@ input[type="text"] {
 }
 
 .unselected {
+    transition: all 250ms;
     opacity: 0.25;
 }
