@@ -34,6 +34,7 @@ const inputColor = document.getElementById('inputColor');
 const slider = document.getElementById('slider');
 const sliderText = document.getElementById('sliderText');
 const alteredColorText = document.getElementById('alteredColorText');
+const alteredColor = document.getElementById('alteredColor');
 //lightenText, darkenText, toggleBtn
 
 //click event listener to the toggle btn
@@ -53,6 +54,7 @@ function handleKeyUp() {
     }
 
     changeBackground(inputColor, hex);
+    reset();
 
 }
 
@@ -180,39 +182,43 @@ const converRGBToHex = (r, g, b) => {
 //create an input event listener for slider element
 //display the value of the slider 
 
+// down below my OWN solution: 
 
+// slider.addEventListener('input', () => {
+//     //check if hex is valid
+//     if (!isValidHex(hexInput.value)) {
+//         return;
+//     }
+//     sliderText.textContent = `${slider.value}%`;
+//     let percentage = slider.value;
 
-slider.addEventListener('input', () => {
-    //check if hex is valid
-    if (!isValidHex(hexInput.value)) {
-        return;
-    }
-    sliderText.textContent = `${slider.value}%`;
-    let percentage = slider.value;
+//     let hexNoHash = formatHex(hexInput.value).slice(1); // make sure there is a starting # then remove it with slice(1)
 
-    let hexNoHash = formatHex(hexInput.value).slice(1); // make sure there is a starting # then remove it with slice(1)
+//     //get the altered hex value
+//     const alteredHex = alterColor(hexNoHash, percentage);
 
-    //get the altered hex value
-    const alteredHex = alterColor(hexNoHash, percentage);
-
-    //update the altered color
-    let alteredColorDiv = document.getElementById('alteredColor');
-    changeBackground(alteredColorDiv, alteredHex);
-    alteredColorText.textContent = `Altered Color: ${hashedAlteredColor}`;
-})
+//     //update the altered color
+//     let alteredColorDiv = document.getElementById('alteredColor');
+//     changeBackground(alteredColorDiv, alteredHex);
+//     alteredColorText.textContent = `Altered Color: ${alteredHex}`;
+// })
 
 // down below MENTOR's solution:
 
 slider.addEventListener('input', () => {
     if (!isValidHex(hexInput.value)) return;
 
-
     sliderText.textContent = `${slider.value}%`;
+    //calulcate the appropriate value for the color alteration
+    //between positive and negative
+    const valueAddition =
+        toggleBtn.classList.contains('toggled') ?
+        -slider.value :
+        slider.value;
 
-
-    //get the altered hex value
-    const alteredHex = alterColor(hexInput.value, slider.value);
-    //update the altered color
+    const alteredHex = alterColor(hexInput.value, valueAddition);
+    alteredColor.style.backgroundColor = alteredHex;
+    alteredColorText.innerText = `Altered Color ${alteredHex}`;
 })
 
 
@@ -269,4 +275,16 @@ toggleBtn.addEventListener('click', () => {
     toggleBtn.classList.toggle('toggled');
     lightenText.classList.toggle('unselected');
     darkenText.classList.toggle('unselected');
+    reset();
 })
+
+function reset() {
+    slider.value = 0;
+    sliderText.textContent = '0%';
+
+    alteredColor.style.backgroundColor = inputColor.style.backgroundColor;
+    alteredColorText.textContent = `Original Color: ${formatHex(hexInput.value)}`;
+
+
+
+}
