@@ -18,7 +18,8 @@
 // }
 
 const isValidHex = (hex) => {
-    if (!hex) return false;
+    let invalidChars = /[g-z]/i;
+    if (!hex || invalidChars.test(hex)) return false;
 
     const strippedHex = hex.replace('#', '');
     return strippedHex.length === 3 || strippedHex.length === 6;
@@ -206,7 +207,8 @@ const converRGBToHex = (r, g, b) => {
 // down below MENTOR's solution:
 
 slider.addEventListener('input', () => {
-    if (!isValidHex(hexInput.value)) return;
+    if (!isValidHex(hexInput.value))
+        return;
 
     sliderText.textContent = `${slider.value}%`;
     //calulcate the appropriate value for the color alteration
@@ -283,7 +285,13 @@ function reset() {
     sliderText.textContent = '0%';
 
     alteredColor.style.backgroundColor = inputColor.style.backgroundColor;
-    alteredColorText.textContent = `Original Color: ${formatHex(hexInput.value)}`;
+    if (!isValidHex(hexInput.value)) {
+        console.log('should dipsplay invalid hex');
+        alteredColorText.textContent = 'Original Color: invalid hex';
+    } else {
+        console.log('should display only if hexInput.value is isValidHex');
+        alteredColorText.textContent = `Original Color: ${formatHex(hexInput.value)}`;
+    }
 
 
 
