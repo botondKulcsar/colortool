@@ -18,7 +18,7 @@
 // }
 
 const isValidHex = (hex) => {
-    let invalidChars = /[g-z]/i;
+    let invalidChars = /[g-zG-Z]/i;
     if (!hex || invalidChars.test(hex)) return false;
 
     const strippedHex = hex.replace('#', '');
